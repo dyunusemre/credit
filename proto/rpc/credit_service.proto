@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package com.example.credit;
+
+message AddCreditRequest{
+
+}
+
+message AddCreditResponse{
+
+}
+
+message GetCreditBalanceRequest{
+
+}
+
+message GetCreditBalanceResponse{
+
+}
+
+message RevertCreditRequest{
+
+}
+
+message RevertCreditResponse{
+
+}
+
+message UseCreditRequest{
+
+}
+
+message UseCreditResponse{
+
+}
+
+message ListCreditHistoryRequest{
+
+}
+
+message ListCreditHistoryResponse{
+
+}
+
+
+service CreditService{
+  rpc AddCredit(AddCreditRequest) returns (AddCreditResponse);
+  rpc RefundCredit(RevertCreditRequest) returns (RevertCreditResponse);
+  rpc GetCreditBalance(GetCreditBalanceRequest) returns (GetCreditBalanceResponse);
+  rpc ListCreditHistory(ListCreditHistoryRequest) returns (ListCreditHistoryResponse);
+
+}
