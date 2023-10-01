@@ -10,6 +10,7 @@ import com.example.credit.domain.common.utils.CreditUtils;
 import com.example.credit.domain.credit.model.Amount;
 import com.example.credit.domain.credit.model.Credit;
 import com.example.credit.domain.credit.port.CreditPort;
+import com.example.credit.domain.creditoperation.model.CreditOperation;
 import com.example.credit.domain.creditoperation.model.CreditOperationType;
 import com.example.credit.domain.credit.usecase.command.ReserveCredit;
 import com.example.credit.domain.creditoperation.port.CreditOperationPort;
@@ -32,11 +33,11 @@ public class ReserveCreditHandler implements UseCaseHandler<OperationResult<Stri
                 .build();
 
         var availableCredits = creditPort.findAllActiveCreditByUserId(useCase.userId());
-        var totalAmount = CreditUtils.calculateAvailableTotalAmount(availableCredits);
+        var totalAmount = CreditUtils.calculateTotalAmount(availableCredits.stream().map(Credit::getAmount).toList());
         var reservedCredits = creditOperationPort.retrieveReservedCreditOperationsByTransactionId(useCase.transactionId());
-        var reservedAmount = CreditUtils.calculateReservedAmount(reservedCredits);
+        var reservedTotalAmount = CreditUtils.calculateTotalAmount(reservedCredits.stream().map(CreditOperation::getAmount).toList());
 
-        if (requiredAmount.add(reservedAmount).getValue().compareTo(totalAmount.getValue()) > 0) {
+        if (requiredAmount.add(reservedTotalAmount).getValue().compareTo(totalAmount.getValue()) > 0) {
             throw new CreditException(ExceptionMessage.CREDIT_NOT_AVAILABLE);
         }
 
