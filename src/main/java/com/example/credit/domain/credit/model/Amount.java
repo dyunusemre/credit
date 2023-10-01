@@ -17,4 +17,11 @@ public class Amount {
                 .value(value.add(amount.getValue()))
                 .build();
     }
+
+    public Amount subtract(Amount amount) {
+        return Amount.builder()
+                .currency(amount.getCurrency())
+                .value(value.subtract(amount.getValue()))
+                .build();
+    }
 }

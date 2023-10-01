@@ -32,7 +32,7 @@ public class CreditUtils {
                     .currency("usd")
                     .build();
 
-        var value = reservedCredits.stream().map(credit -> credit.getAmount().getValue())
+        var value = reservedCredits.stream().map(creditOperation -> creditOperation.getAmount().getValue())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return Amount.builder()

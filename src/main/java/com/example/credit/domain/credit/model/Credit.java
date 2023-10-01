@@ -34,10 +34,7 @@ public class Credit {
         BigDecimal usedAmount;
         if (amount.getValue().compareTo(consumedAmount.getValue()) > 0) {
             usedAmount = consumedAmount.getValue();
-            this.amount = Amount.builder()
-                    .value(amount.getValue().subtract(consumedAmount.getValue()))
-                    .currency(amount.getCurrency())
-                    .build();
+            this.amount = amount.subtract(consumedAmount);
         } else {
             usedAmount = amount.getValue();
             this.amount = Amount.builder()
@@ -55,10 +52,6 @@ public class Credit {
         if (!amount.getCurrency().equals(addedAmount.getCurrency()))
             throw new CreditException(ExceptionMessage.CURRENCY_MISS_MATCH);
 
-        amount = Amount.builder()
-                .value(amount.getValue().add(addedAmount.getValue()))
-                .currency(amount.getCurrency())
-                .build();
-
+        amount = amount.add(addedAmount);
     }
 }

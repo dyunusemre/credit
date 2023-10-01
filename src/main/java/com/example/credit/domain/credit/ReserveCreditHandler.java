@@ -36,7 +36,7 @@ public class ReserveCreditHandler implements UseCaseHandler<OperationResult<Stri
         var reservedCredits = creditOperationPort.retrieveReservedCreditOperationsByTransactionId(useCase.transactionId());
         var reservedAmount = CreditUtils.calculateReservedAmount(reservedCredits);
 
-        if (requiredAmount.getValue().add(reservedAmount.getValue()).compareTo(totalAmount.getValue()) > 0) {
+        if (requiredAmount.add(reservedAmount).getValue().compareTo(totalAmount.getValue()) > 0) {
             throw new CreditException(ExceptionMessage.CREDIT_NOT_AVAILABLE);
         }
 
